@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================= TREE VIEW ================= -->
+    <record id="view_student_tree" model="ir.ui.view">
+        <field name="name">student.management.list</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <list>
+                <!-- SMALL PROFILE PICTURE (40x40) -->
+                <field name="image_1920"
+                       widget="image"
+                       class="oe_avatar"
+                       options="{'size': [40, 40]}"/>
+
+                <field name="name"/>
+                <field name="age"/>
+                <field name="course"/>
+                <field name="total_marks"/>
+
+                <field name="grade"
+                       widget="badge"
+                       decoration-primary="grade == 'outstanding'"
+                       decoration-success="grade == 'excellent'"
+                       decoration-info="grade == 'good'"
+                       decoration-danger="grade == 'fail'"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ================= FORM VIEW ================= -->
+    <record id="view_student_form" model="ir.ui.view">
+        <field name="name">student.management.form</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <!-- IMAGE + DETAILS -->
+                    <group>
+                        <group>
+                            <field name="image_1920"
+                                   widget="image"
+                                   class="oe_avatar"
+                                   options="{'preview_image': 'image_1920'}"/>
+                        </group>
+
+                        <group string="Student Details">
+                            <field name="name"/>
+                            <field name="age"/>
+                            <field name="course"/>
+                        </group>
+                    </group>
+
+                    <group string="Marks">
+                        <field name="internal_marks"/>
+                        <field name="external_marks"/>
+                        <field name="total_marks" readonly="1"/>
+                    </group>
+
+                    <group string="Result">
+                        <field name="grade" readonly="1"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ================= SEARCH VIEW ================= -->
+    <record id="view_student_search" model="ir.ui.view">
+        <field name="name">student.management.search</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="course"/>
+
+                <filter name="filter_outstanding"
+                        string="Outstanding"
+                        domain="[('grade','=','outstanding')]"/>
+
+                <filter name="filter_fail"
+                        string="Fail"
+                        domain="[('grade','=','fail')]"/>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- ================= ACTION ================= -->
+    <record id="action_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">student.management</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_student_search"/>
+    </record>
+
+
+    <!-- ================= MENU ================= -->
+    <menuitem id="menu_student_root" name="Student Management"/>
+    <menuitem id="menu_student"
+              name="Students"
+              parent="menu_student_root"
+              action="action_student"/>
+
+</odoo>
