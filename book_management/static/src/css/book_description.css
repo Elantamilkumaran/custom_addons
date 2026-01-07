@@ -1,0 +1,7 @@
+.o_field_text textarea::placeholder {
+    vertical-align: top;
+}
+
+.o_field_text textarea {
+    padding-top: 6px;
+}

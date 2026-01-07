@@ -7,15 +7,15 @@ class Student(models.Model):
     # --------------------
     # BASIC DETAILS
     # --------------------
-    name = fields.Char(string='Student Name', required=True)
-    image_1920 = fields.Image(string="Profile Picture")
+    name = fields.Char(string='Student Name',required=True)
+    image_1920 = fields.Image(string="Profile Picture",help="Profile Photo")
 
-    age = fields.Integer(string='Age')
+    age = fields.Integer(string='Age',default="18")
 
     course = fields.Selection(
         [
             ('cse', 'Computer Science Engineering'),
-            ('ece', 'Electronics and Communication'),
+            ('ece', 'Electronics and Communication Engineering'),
             ('eee', 'Electrical and Electronics'),
             ('mech', 'Mechanical Engineering'),
             ('civil', 'Civil Engineering'),

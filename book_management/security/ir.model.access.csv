@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_create,perm_write,perm_read,perm_unlink
+access_book_management,book.management,model_book_management,,1,1,1,1
