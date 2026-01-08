@@ -1,0 +1,84 @@
+<odoo>
+
+    <!-- ===================== -->
+    <!-- GENRE TAGS -->
+    <!-- ===================== -->
+    <record id="genre_action" model="book.genre">
+        <field name="name">Action</field>
+        <field name="color">1</field>
+    </record>
+
+    <record id="genre_romance" model="book.genre">
+        <field name="name">Romance</field>
+        <field name="color">2</field>
+    </record>
+
+    <record id="genre_fantasy" model="book.genre">
+        <field name="name">Fantasy</field>
+        <field name="color">3</field>
+    </record>
+
+    <record id="genre_desire" model="book.genre">
+        <field name="name">Desire</field>
+        <field name="color">4</field>
+    </record>
+
+    <record id="genre_novel" model="book.genre">
+        <field name="name">Novel</field>
+        <field name="color">5</field>
+    </record>
+
+    <record id="genre_poet" model="book.genre">
+        <field name="name">Poet</field>
+        <field name="color">6</field>
+    </record>
+
+    <record id="genre_horror" model="book.genre">
+        <field name="name">Horror</field>
+        <field name="color">7</field>
+    </record>
+
+    <record id="genre_thriller" model="book.genre">
+        <field name="name">Thriller</field>
+        <field name="color">8</field>
+    </record>
+
+    <record id="genre_comic" model="book.genre">
+        <field name="name">Comic</field>
+        <field name="color">9</field>
+    </record>
+
+    <!-- ===================== -->
+    <!-- REVIEW TAGS -->
+    <!-- ===================== -->
+    <record id="review_vb" model="book.review.tag">
+        <field name="name">Very bad</field>
+        <field name="color">1</field>
+    </record>
+
+    <record id="review_b" model="book.review.tag">
+        <field name="name">Bad</field>
+        <field name="color">2</field>
+    </record>
+
+    <record id="review_g" model="book.review.tag">
+        <field name="name">Good</field>
+        <field name="color">4</field>
+    </record>
+
+    <record id="review_n" model="book.review.tag">
+        <field name="name">Nice</field>
+        <field name="color">6</field>
+    </record>
+
+    <record id="review_vn" model="book.review.tag">
+        <field name="name">Very nice</field>
+        <field name="color">8</field>
+    </record>
+
+    <record id="review_ex" model="book.review.tag">
+        <field name="name">Excellent</field>
+        <field name="color">10</field>
+    </record>
+
+</odoo>

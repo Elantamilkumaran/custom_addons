@@ -6,10 +6,12 @@
     'description' : 'This module manages books',
     'author' : 'Elantamilkumaran',
     'depends' : ['base'],
-    'data' : [
+    'data': [
+        'security/ir.model.access.csv',
         'views/book_view.xml',
-        'security/ir.model.access.csv'
+        'views/book_menu.xml',
+        'data/book_tags.xml',
     ],
-    'application' : True,
+    'application': True,
     'installable' : True
 }

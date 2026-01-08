@@ -1,0 +1,22 @@
+<odoo>
+
+    <!-- ACTION -->
+    <record id="action_book_management" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">book.management</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ROOT MENU -->
+    <menuitem id="menu_book_root"
+              name="Book Management"
+              sequence="10"/>
+
+    <!-- CHILD MENU -->
+    <menuitem id="menu_book_management"
+              name="Books"
+              parent="menu_book_root"
+              action="action_book_management"
+              sequence="10"/>
+
+</odoo>

@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- list VIEW -->
-    <record id="view_book_tree" model="ir.ui.view">
+    <!-- ===================== -->
+    <!-- BOOK list VIEW -->
+    <!-- ===================== -->
+    <record id="view_book_list" model="ir.ui.view">
         <field name="name">book.management.list</field>
         <field name="model">book.management</field>
         <field name="arch" type="xml">
@@ -10,60 +11,50 @@
                 <field name="book_id"/>
                 <field name="book_title"/>
                 <field name="book_author"/>
-                <field name="book_genre"/>
                 <field name="book_rating"/>
-                <field name="book_review"/>
             </list>
         </field>
     </record>
 
-    <!-- FORM VIEW -->
+    <!-- ===================== -->
+    <!-- BOOK FORM VIEW -->
+    <!-- ===================== -->
     <record id="view_book_form" model="ir.ui.view">
         <field name="name">book.management.form</field>
         <field name="model">book.management</field>
         <field name="arch" type="xml">
             <form string="Book">
                 <sheet>
+
                     <group>
-                        <group>
-                            <field name="book_id"/>
-                            <field name="book_title"/>
-                            <field name="book_author"/>
-                        </group>
-                        <group>
-                            <field name="book_genre"/>
-                            <field name="book_rating"/>
-                            <field name="book_review" readonly="1"/>
-                        </group>
+                        <field name="book_id"/>
+                        <field name="book_title"/>
+                        <field name="book_author"/>
+                        <field name="book_rating"/>
                     </group>
-                    <group string='Description'>
-                        <group>
-                            <field 
-                                    name="book_description" 
-                                    placeholder="Enter your thoughts of the book"
-                                    nolabel="1"
-                            />
-                        </group>
+
+                    <group string="Tags">
+                        <!-- GENRE TAGS -->
+                        <field name="book_genre_ids"
+                               widget="many2many_tags"
+                               options="{'color_field': 'color'}"/>
+
+                        <!-- REVIEW TAGS -->
+                        <field name="book_review_ids"
+                               widget="many2many_tags"
+                               options="{'color_field': 'color'}"
+                               readonly="1"/>
                     </group>
+
+                    <notebook>
+                        <page string="Description">
+                            <field name="book_description"/>
+                        </page>
+                    </notebook>
+
                 </sheet>
             </form>
         </field>
     </record>
-
-    <!-- ACTION -->
-    <record id="action_book_management" model="ir.actions.act_window">
-        <field name="name">Books</field>
-        <field name="res_model">book.management</field>
-        <field name="view_mode">list,form</field>
-    </record>
-
-    <!-- MENU -->
-    <menuitem id="menu_book_root" name="Book Management"/>
-    <menuitem
-        id="menu_book_management"
-        name="Books"
-        parent="menu_book_root"
-        action="action_book_management"
-    />
 
 </odoo>
