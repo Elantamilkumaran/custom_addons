@@ -71,3 +71,4 @@ class Student(models.Model):
                 record.grade = 'good'
             else:
                 record.grade = 'fail'
+#end

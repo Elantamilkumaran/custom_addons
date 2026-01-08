@@ -21,4 +21,4 @@ class StudentSkill(models.Model):
         string='Student',
         ondelete='cascade'
     )
-    
+#end
