@@ -50,7 +50,11 @@ class Student(models.Model):
         compute="_compute_grade",
         store=True
     )
-
+    skill_ids=fields.One2many(
+        'student.skill',
+        'student_id',
+        string='Skills'
+    )
     @api.depends('internal_marks', 'external_marks')
     def _compute_total_marks(self):
         for record in self:

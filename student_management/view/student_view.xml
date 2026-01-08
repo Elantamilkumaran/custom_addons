@@ -7,7 +7,7 @@
         <field name="model">student.management</field>
         <field name="arch" type="xml">
             <list>
-                <!-- SMALL PROFILE PICTURE (40x40) -->
+                <!-- SMALL PROFILE PICTURE -->
                 <field name="image_1920"
                        widget="image"
                        class="oe_avatar"
@@ -37,7 +37,7 @@
             <form>
                 <sheet>
 
-                    <!-- IMAGE + DETAILS -->
+                    <!-- IMAGE + BASIC DETAILS -->
                     <group>
                         <group>
                             <field name="image_1920"
@@ -53,15 +53,34 @@
                         </group>
                     </group>
 
-                    <group string="Marks">
-                        <field name="internal_marks"/>
-                        <field name="external_marks"/>
-                        <field name="total_marks" readonly="1"/>
-                    </group>
+                    <!-- NOTEBOOK START -->
+                    <notebook>
 
-                    <group string="Result">
-                        <field name="grade" readonly="1"/>
-                    </group>
+                        <!-- MARKS TAB -->
+                        <page string="Marks">
+                            <group>
+                                <field name="internal_marks"/>
+                                <field name="external_marks"/>
+                                <field name="total_marks" readonly="1"/>
+                            </group>
+
+                            <group string="Result">
+                                <field name="grade" readonly="1"/>
+                            </group>
+                        </page>
+
+                        <!-- SKILLS TAB (One2many) -->
+                        <page string="Skills">
+                            <field name="skill_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="level"/>
+                                </list>
+                            </field>
+                        </page>
+
+                    </notebook>
+                    <!-- NOTEBOOK END -->
 
                 </sheet>
             </form>

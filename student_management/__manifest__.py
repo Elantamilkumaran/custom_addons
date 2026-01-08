@@ -9,6 +9,7 @@
     'data': [
         'security/ir.model.access.csv',
         'view/student_view.xml',
+        'view/student_skill_view.xml'
     ],
     'installable': True,
     'application': True,
