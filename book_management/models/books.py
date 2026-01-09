@@ -22,6 +22,36 @@ class book(models.Model) :
         string='Genre'
     )
 
+    status = fields.Selection(
+        [
+            ('new','New'),
+            ('writing', "Writing"),
+            ('correction', "Correction"),
+            ('published', "Published")
+        ],
+        string="Status",
+        default="new",
+        required=True
+    )
+
+    def next_status(self) :
+        for rec in self:
+            if rec.status == 'new':
+                rec.status = 'writing'
+            elif rec.status == 'writing':
+                rec.status = 'correction'
+            else :
+                rec.status = 'published'
+
+    def previous_status(self) :
+        for rec in self:
+            if rec.status == 'published' :
+                rec.status = 'correction'
+            elif rec.status == 'correction' :
+                rec.status = 'writing'
+            else :
+                rec.status = 'new'
+
     book_description=fields.Text()
 
     @api.depends('book_rating')

@@ -1,16 +1,17 @@
 <odoo>
 
     <!-- ===================== -->
-    <!-- BOOK list VIEW -->
+    <!-- BOOK TREE VIEW -->
     <!-- ===================== -->
-    <record id="view_book_list" model="ir.ui.view">
-        <field name="name">book.management.list</field>
+    <record id="view_book_tree" model="ir.ui.view">
+        <field name="name">book.management.tree</field>
         <field name="model">book.management</field>
         <field name="arch" type="xml">
             <list>
                 <field name="book_id"/>
                 <field name="book_title"/>
                 <field name="book_author"/>
+                <field name="status"/>
                 <field name="book_rating"/>
             </list>
         </field>
@@ -24,6 +25,31 @@
         <field name="model">book.management</field>
         <field name="arch" type="xml">
             <form string="Book">
+
+                <!-- HEADER WITH STAGES + BUTTONS -->
+                <header>
+
+                    <!-- STATUS BAR -->
+                    <field name="status"
+                           widget="statusbar"
+                           statusbar_visible="new,writing,correction,published"/>
+
+                    <!-- PREVIOUS BUTTON -->
+                    <button name="previous_status"
+                            string="Previous"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="status == 'new'"/>
+
+                    <!-- NEXT BUTTON -->
+                    <button name="next_status"
+                            string="Next"
+                            type="object"
+                            class="btn-primary"
+                            invisible="status == 'published'"/>
+
+                </header>
+
                 <sheet>
 
                     <group>

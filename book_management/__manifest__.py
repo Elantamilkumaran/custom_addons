@@ -12,6 +12,7 @@
         'views/book_menu.xml',
         'data/book_tags.xml',
     ],
+    'sequence':-9,
     'application': True,
     'installable' : True
 }
