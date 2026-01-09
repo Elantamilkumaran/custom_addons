@@ -23,7 +23,16 @@ class Student(models.Model):
         string='Course',
         required=True
     )
-
+    year_stage=fields.Selection(
+        [
+            ('year1','1st Year'),
+            ('year2','2nd Year'),
+            ('year3','3rd Year'),
+            ('year4','4th Year'),
+        ],
+        string='Current Year',
+        default='year1'
+    )
     # --------------------
     # MARKS
     # --------------------
@@ -71,4 +80,22 @@ class Student(models.Model):
                 record.grade = 'good'
             else:
                 record.grade = 'fail'
+    
+    def action_next_year(self):
+        for rec in self:
+            if rec.year_stage=='year1':
+                rec.year_stage='year2'
+            elif rec.year_stage=='year2':
+                rec.year_stage='year3'
+            elif rec.year_stage=='year3':
+                rec.year_stage='year4'
+    def action_prev_year(self):
+        for rec in self:
+            if rec.year_stage=='year4':
+                rec.year_stage='year3'
+            elif rec.year_stage=='year3':
+                rec.year_stage='year2'
+            elif rec.year_stage=='year2':
+                rec.year_stage='year1'
+
 #end

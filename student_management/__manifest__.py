@@ -11,6 +11,7 @@
         'view/student_view.xml',
         'view/student_skill_view.xml'
     ],
+    'sequence':-10,
     'installable': True,
     'application': True,
 }

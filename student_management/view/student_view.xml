@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- ================= TREE VIEW ================= -->
+    <!-- =====================================================
+                        TREE VIEW
+    ====================================================== -->
     <record id="view_student_tree" model="ir.ui.view">
         <field name="name">student.management.list</field>
         <field name="model">student.management</field>
         <field name="arch" type="xml">
             <list>
-                <!-- SMALL PROFILE PICTURE -->
                 <field name="image_1920"
                        widget="image"
                        class="oe_avatar"
@@ -16,6 +17,7 @@
                 <field name="name"/>
                 <field name="age"/>
                 <field name="course"/>
+                <field name="year_stage"/>
                 <field name="total_marks"/>
 
                 <field name="grade"
@@ -28,13 +30,34 @@
         </field>
     </record>
 
-
-    <!-- ================= FORM VIEW ================= -->
+    <!-- =====================================================
+                        FORM VIEW
+    ====================================================== -->
     <record id="view_student_form" model="ir.ui.view">
         <field name="name">student.management.form</field>
         <field name="model">student.management</field>
         <field name="arch" type="xml">
             <form>
+
+                <!-- ===== YEAR STAGE BAR & BUTTONS ===== -->
+                <header>
+                    <field name="year_stage"
+                           widget="statusbar"
+                           statusbar_visible="year1,year2,year3,year4"/>
+
+                    <button name="action_prev_year"
+                            type="object"
+                            string="Previous Year"
+                            class="btn-secondary"
+                            invisible="year_stage == 'year1'"/>
+
+                    <button name="action_next_year"
+                            type="object"
+                            string="Next Year"
+                            class="btn-primary"
+                            invisible="year_stage == 'year4'"/>
+                </header>
+
                 <sheet>
 
                     <!-- IMAGE + BASIC DETAILS -->
@@ -50,10 +73,11 @@
                             <field name="name"/>
                             <field name="age"/>
                             <field name="course"/>
+                            <field name="year_stage" readonly="1"/>
                         </group>
                     </group>
 
-                    <!-- NOTEBOOK START -->
+                    <!-- ================= NOTEBOOK ================= -->
                     <notebook>
 
                         <!-- MARKS TAB -->
@@ -69,7 +93,7 @@
                             </group>
                         </page>
 
-                        <!-- SKILLS TAB (One2many) -->
+                        <!-- SKILLS TAB -->
                         <page string="Skills">
                             <field name="skill_ids">
                                 <list editable="bottom">
@@ -80,15 +104,15 @@
                         </page>
 
                     </notebook>
-                    <!-- NOTEBOOK END -->
 
                 </sheet>
             </form>
         </field>
     </record>
 
-
-    <!-- ================= SEARCH VIEW ================= -->
+    <!-- =====================================================
+                        SEARCH VIEW
+    ====================================================== -->
     <record id="view_student_search" model="ir.ui.view">
         <field name="name">student.management.search</field>
         <field name="model">student.management</field>
@@ -96,10 +120,11 @@
             <search>
                 <field name="name"/>
                 <field name="course"/>
+                <field name="year_stage"/>
 
-                <filter name="filter_outstanding"
-                        string="Outstanding"
-                        domain="[('grade','=','outstanding')]"/>
+                <filter name="filter_year1"
+                        string="1st Year"
+                        domain="[('year_stage','=','year1')]"/>
 
                 <filter name="filter_fail"
                         string="Fail"
@@ -108,8 +133,9 @@
         </field>
     </record>
 
-
-    <!-- ================= ACTION ================= -->
+    <!-- =====================================================
+                        ACTION
+    ====================================================== -->
     <record id="action_student" model="ir.actions.act_window">
         <field name="name">Students</field>
         <field name="res_model">student.management</field>
@@ -117,9 +143,11 @@
         <field name="search_view_id" ref="view_student_search"/>
     </record>
 
-
-    <!-- ================= MENU ================= -->
+    <!-- =====================================================
+                        MENU
+    ====================================================== -->
     <menuitem id="menu_student_root" name="Student Management"/>
+
     <menuitem id="menu_student"
               name="Students"
               parent="menu_student_root"
