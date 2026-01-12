@@ -1,5 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_student_management,student.management,model_student_management,base.group_user,1,1,1,1
 access_student_skill,student.skill access,model_student_skill,,1,1,1,1
-
-
+access_student_year_confirm_wizard,access_student_year_confirm_wizard,model_student_year_confirm_wizard,base.group_user,1,1,1,1

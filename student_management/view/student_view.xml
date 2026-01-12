@@ -45,13 +45,13 @@
                            widget="statusbar"
                            statusbar_visible="year1,year2,year3,year4"/>
 
-                    <button name="action_prev_year"
+                    <button name="action_previous_year_confirm"
                             type="object"
                             string="Previous Year"
                             class="btn-secondary"
                             invisible="year_stage == 'year1'"/>
 
-                    <button name="action_next_year"
+                    <button name="action_next_year_confirm"
                             type="object"
                             string="Next Year"
                             class="btn-primary"
@@ -106,6 +106,32 @@
                     </notebook>
 
                 </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- =====================================================
+                        CONFIRM WIZARD VIEW
+    ====================================================== -->
+    <record id="view_student_year_confirm_wizard" model="ir.ui.view">
+        <field name="name">student.year.confirm.wizard.form</field>
+        <field name="model">student.year.confirm.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Confirm Action">
+                <group>
+                    <div class="o_form_label">
+                        Are you sure you want to change the year?
+                    </div>
+                </group>
+                <footer>
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"/>
+                    <button string="Cancel"
+                            special="cancel"
+                            class="btn-secondary"/>
+                </footer>
             </form>
         </field>
     </record>

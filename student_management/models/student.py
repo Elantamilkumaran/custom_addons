@@ -97,5 +97,35 @@ class Student(models.Model):
                 rec.year_stage='year2'
             elif rec.year_stage=='year2':
                 rec.year_stage='year1'
+    
+    def action_next_year_confirm(self):
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Confirm',
+            'res_model': 'student.year.confirm.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_student_id': self.id,
+                'default_direction': 'next',
+            }
+        }
+
+
+    def action_previous_year_confirm(self):
+        
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Confirm',
+            'res_model': 'student.year.confirm.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_student_id': self.id,
+                'default_direction': 'previous',
+            }
+        }
+
 
 #end
