@@ -79,3 +79,32 @@ class book(models.Model) :
             tag = ReviewTag.search([('name', '=', tag_name)], limit=1)
             if tag:
                 rec.book_review_ids = [(6, 0, tag.ids)]
+
+    def open_next_wizard(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Confirm Next Stage',
+            'res_model': 'book.confirm.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_book_id': self.id,
+                'default_direction': 'next',
+            }
+        }
+
+
+    def open_previous_wizard(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Confirm Previous Stage',
+            'res_model': 'book.confirm.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_book_id': self.id,
+                'default_direction': 'previous',
+            }
+        }

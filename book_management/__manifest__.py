@@ -10,6 +10,7 @@
         'security/ir.model.access.csv',
         'views/book_view.xml',
         'views/book_menu.xml',
+        'wizard/book_confirm_wizard_view.xml',
         'data/book_tags.xml',
     ],
     'sequence':-9,
