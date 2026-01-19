@@ -1,88 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
     <!-- ===================== -->
-    <!-- BOOK LIST VIEW -->
+    <!-- TREE (LIST) VIEW -->
     <!-- ===================== -->
-    <record id="view_book_list" model="ir.ui.view">
+    <record id="view_book_tree" model="ir.ui.view">
         <field name="name">book.management.list</field>
         <field name="model">book.management</field>
         <field name="arch" type="xml">
             <list>
-                <field name="book_id"/>
                 <field name="book_title"/>
                 <field name="book_author"/>
-                <field name="status"/>
-                <field name="book_rating"/>
+                <field name="status"
+                       decoration-info="status == 'new'"
+                       decoration-warning="status == 'writing'"
+                       decoration-primary="status == 'correction'"
+                       decoration-success="status == 'published'"/>
             </list>
         </field>
     </record>
 
     <!-- ===================== -->
-    <!-- BOOK FORM VIEW -->
+    <!-- FORM VIEW -->
     <!-- ===================== -->
     <record id="view_book_form" model="ir.ui.view">
         <field name="name">book.management.form</field>
         <field name="model">book.management</field>
         <field name="arch" type="xml">
-            <form string="Book">
-
-                <!-- HEADER -->
-                <header>
-
-                    <!-- STATUS BAR -->
-                    <field name="status"
-                           widget="statusbar"
-                           statusbar_visible="new,writing,correction,published"/>
-
-                    <!-- PREVIOUS (Wizard) -->
-                    <button name="open_previous_wizard"
-                            string="Previous"
-                            type="object"
-                            class="btn-secondary"
-                            invisible="status == 'new'"/>
-
-                    <!-- NEXT (Wizard) -->
-                    <button name="open_next_wizard"
-                            string="Next"
-                            type="object"
-                            class="btn-primary"
-                            invisible="status == 'published'"/>
-
-                </header>
-
-                <!-- BODY -->
+            <form>
                 <sheet>
-
                     <group>
-                        <field name="book_id"/>
                         <field name="book_title"/>
                         <field name="book_author"/>
-                        <field name="book_rating"/>
+                        <field name="status"/>
                     </group>
-
-                    <group string="Tags">
-                        <!-- GENRE TAGS -->
-                        <field name="book_genre_ids"
-                               widget="many2many_tags"
-                               options="{'color_field': 'color'}"/>
-
-                        <!-- REVIEW TAGS -->
-                        <field name="book_review_ids"
-                               widget="many2many_tags"
-                               options="{'color_field': 'color'}"
-                               readonly="1"/>
-                    </group>
-
-                    <notebook>
-                        <page string="Description">
-                            <field name="book_description"/>
-                        </page>
-                    </notebook>
-
                 </sheet>
-
             </form>
         </field>
     </record>
+
+    <!-- ===================== -->
+    <!-- SEARCH VIEW (FIXED) -->
+    <!-- ===================== -->
+    <record id="view_book_search" model="ir.ui.view">
+        <field name="name">book.management.search</field>
+        <field name="model">book.management</field>
+        <field name="arch" type="xml">
+            <search>
+
+                <field name="book_title"/>
+                <field name="book_author"/>
+
+                <!-- STATUS FILTERS -->
+                <filter name="filter_new"
+                        string="New"
+                        domain="[('status','=','new')]"/>
+
+                <filter name="filter_writing"
+                        string="Writing"
+                        domain="[('status','=','writing')]"/>
+
+                <filter name="filter_correction"
+                        string="Correction"
+                        domain="[('status','=','correction')]"/>
+
+                <filter name="filter_published"
+                        string="Published"
+                        domain="[('status','=','published')]"/>
+
+                <!-- GROUP BY -->
+                <filter name="group_by_status"
+                        string="Group by Status"
+                        context="{'group_by':'status'}"/>
+
+            </search>
+        </field>
+    </record>
+
+    <!-- ===================== -->
+    <!-- ACTION -->
+    <!-- ===================== -->
+    <record id="action_book_management" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">book.management</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_book_search"/>
+    </record>
+
+    <!-- ===================== -->
+    <!-- MENU -->
+    <!-- ===================== -->
+    <menuitem id="menu_book_root" name="Book Management"/>
+
+    <menuitem id="menu_book"
+              name="Books"
+              parent="menu_book_root"
+              action="action_book_management"/>
 
 </odoo>

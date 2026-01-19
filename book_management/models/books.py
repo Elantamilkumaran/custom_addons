@@ -4,7 +4,7 @@ class book(models.Model) :
     _name = 'book.management'
     _description = 'Book Management'
 
-    book_id = fields.Integer(string='Book ID', required=True)
+    book_id = fields.Integer(string='Book ID', required=True, help="Enter the book id written in backside of the book")
     book_title = fields.Char(string='Book Title', size=500, required = True, index=True)
     book_author = fields.Char(string = 'Book Author', size=100, required=True, default='unknown')
     book_rating = fields.Float(string="Rating", digits=(2,1), default=0.0, required=True)
