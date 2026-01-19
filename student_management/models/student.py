@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 
+
 class Student(models.Model):
     _name = 'student.management'
     _description = 'Student Management'
@@ -7,10 +8,10 @@ class Student(models.Model):
     # --------------------
     # BASIC DETAILS
     # --------------------
-    name = fields.Char(string='Student Name',required=True)
-    image_1920 = fields.Image(string="Profile Picture",help="Profile Photo")
+    name = fields.Char(string='Student Name', required=True)
+    image_1920 = fields.Image(string="Profile Picture", help="Profile Photo")
 
-    age = fields.Integer(string='Age',default="18")
+    age = fields.Integer(string='Age', default=18)
 
     course = fields.Selection(
         [
@@ -23,16 +24,18 @@ class Student(models.Model):
         string='Course',
         required=True
     )
-    year_stage=fields.Selection(
+
+    year_stage = fields.Selection(
         [
-            ('year1','1st Year'),
-            ('year2','2nd Year'),
-            ('year3','3rd Year'),
-            ('year4','4th Year'),
+            ('year1', '1st Year'),
+            ('year2', '2nd Year'),
+            ('year3', '3rd Year'),
+            ('year4', '4th Year'),
         ],
         string='Current Year',
         default='year1'
     )
+
     # --------------------
     # MARKS
     # --------------------
@@ -59,11 +62,16 @@ class Student(models.Model):
         compute="_compute_grade",
         store=True
     )
-    skill_ids=fields.One2many(
+
+    skill_ids = fields.One2many(
         'student.skill',
         'student_id',
         string='Skills'
     )
+
+    # --------------------
+    # COMPUTE METHODS
+    # --------------------
     @api.depends('internal_marks', 'external_marks')
     def _compute_total_marks(self):
         for record in self:
@@ -71,7 +79,6 @@ class Student(models.Model):
 
     @api.depends('total_marks')
     def _compute_grade(self):
-        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         for record in self:
             if record.total_marks >= 90:
                 record.grade = 'outstanding'
@@ -81,26 +88,54 @@ class Student(models.Model):
                 record.grade = 'good'
             else:
                 record.grade = 'fail'
-    
+
+    # --------------------
+    # ✅ ONCHANGE MESSAGE BASED ON GRADE
+    # --------------------
+    @api.onchange('grade')
+    def _onchange_grade_message(self):
+        if not self.grade:
+            return
+
+        messages = {
+            'outstanding': '🎉 Keep it up! Outstanding performance.',
+            'excellent': '👏 Great job! You are doing very well.',
+            'good': '🙂 Good effort. You can still improve.',
+            'fail': '⚠️ Needs improvement. Don’t give up!'
+        }
+
+        return {
+            'warning': {
+                'title': 'Result Feedback',
+                'message': messages.get(self.grade),
+            }
+        }
+
+    # --------------------
+    # YEAR ACTIONS
+    # --------------------
     def action_next_year(self):
         for rec in self:
-            if rec.year_stage=='year1':
-                rec.year_stage='year2'
-            elif rec.year_stage=='year2':
-                rec.year_stage='year3'
-            elif rec.year_stage=='year3':
-                rec.year_stage='year4'
+            if rec.year_stage == 'year1':
+                rec.year_stage = 'year2'
+            elif rec.year_stage == 'year2':
+                rec.year_stage = 'year3'
+            elif rec.year_stage == 'year3':
+                rec.year_stage = 'year4'
+
     def action_prev_year(self):
         for rec in self:
-            if rec.year_stage=='year4':
-                rec.year_stage='year3'
-            elif rec.year_stage=='year3':
-                rec.year_stage='year2'
-            elif rec.year_stage=='year2':
-                rec.year_stage='year1'
-    
-    def action_next_year_confirm(self):
+            if rec.year_stage == 'year4':
+                rec.year_stage = 'year3'
+            elif rec.year_stage == 'year3':
+                rec.year_stage = 'year2'
+            elif rec.year_stage == 'year2':
+                rec.year_stage = 'year1'
 
+    # --------------------
+    # CONFIRM WIZARDS
+    # --------------------
+    def action_next_year_confirm(self):
         return {
             'type': 'ir.actions.act_window',
             'name': 'Confirm',
@@ -113,9 +148,7 @@ class Student(models.Model):
             }
         }
 
-
     def action_previous_year_confirm(self):
-        
         return {
             'type': 'ir.actions.act_window',
             'name': 'Confirm',
@@ -127,6 +160,3 @@ class Student(models.Model):
                 'default_direction': 'previous',
             }
         }
-
-
-#end
