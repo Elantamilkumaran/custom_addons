@@ -71,6 +71,7 @@ class Student(models.Model):
 
     @api.depends('total_marks')
     def _compute_grade(self):
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         for record in self:
             if record.total_marks >= 90:
                 record.grade = 'outstanding'

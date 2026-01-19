@@ -39,7 +39,6 @@
         <field name="arch" type="xml">
             <form>
 
-                <!-- ===== YEAR STAGE BAR & BUTTONS ===== -->
                 <header>
                     <field name="year_stage"
                            widget="statusbar"
@@ -59,8 +58,6 @@
                 </header>
 
                 <sheet>
-
-                    <!-- IMAGE + BASIC DETAILS -->
                     <group>
                         <group>
                             <field name="image_1920"
@@ -77,10 +74,8 @@
                         </group>
                     </group>
 
-                    <!-- ================= NOTEBOOK ================= -->
                     <notebook>
 
-                        <!-- MARKS TAB -->
                         <page string="Marks">
                             <group>
                                 <field name="internal_marks"/>
@@ -93,7 +88,6 @@
                             </group>
                         </page>
 
-                        <!-- SKILLS TAB -->
                         <page string="Skills">
                             <field name="skill_ids">
                                 <list editable="bottom">
@@ -104,25 +98,26 @@
                         </page>
 
                     </notebook>
-
                 </sheet>
             </form>
         </field>
     </record>
 
     <!-- =====================================================
-                        CONFIRM WIZARD VIEW
+                CONFIRM YEAR CHANGE WIZARD
     ====================================================== -->
     <record id="view_student_year_confirm_wizard" model="ir.ui.view">
         <field name="name">student.year.confirm.wizard.form</field>
         <field name="model">student.year.confirm.wizard</field>
         <field name="arch" type="xml">
-            <form string="Confirm Action">
-                <group>
-                    <div class="o_form_label">
-                        Are you sure you want to change the year?
-                    </div>
-                </group>
+            <form string="Confirm Year Change">
+                <sheet>
+                    <group>
+                        <div class="o_form_label">
+                            Are you sure you want to change the year?
+                        </div>
+                    </group>
+                </sheet>
                 <footer>
                     <button name="action_confirm"
                             type="object"
@@ -137,24 +132,69 @@
     </record>
 
     <!-- =====================================================
-                        SEARCH VIEW
+                        SEARCH VIEW (FIXED)
     ====================================================== -->
     <record id="view_student_search" model="ir.ui.view">
         <field name="name">student.management.search</field>
         <field name="model">student.management</field>
         <field name="arch" type="xml">
-            <search>
+            <search string="Students">
+
                 <field name="name"/>
                 <field name="course"/>
                 <field name="year_stage"/>
+                <field name="grade"/>
 
-                <filter name="filter_year1"
+                <separator/>
+
+                <filter name="year1"
                         string="1st Year"
                         domain="[('year_stage','=','year1')]"/>
 
-                <filter name="filter_fail"
+                <filter name="year2"
+                        string="2nd Year"
+                        domain="[('year_stage','=','year2')]"/>
+
+                <filter name="year3"
+                        string="3rd Year"
+                        domain="[('year_stage','=','year3')]"/>
+
+                <filter name="year4"
+                        string="4th Year"
+                        domain="[('year_stage','=','year4')]"/>
+
+                <separator/>
+
+                <filter name="grade_outstanding"
+                        string="Outstanding"
+                        domain="[('grade','=','outstanding')]"/>
+
+                <filter name="grade_excellent"
+                        string="Excellent"
+                        domain="[('grade','=','excellent')]"/>
+
+                <filter name="grade_good"
+                        string="Good"
+                        domain="[('grade','=','good')]"/>
+
+                <filter name="grade_fail"
                         string="Fail"
                         domain="[('grade','=','fail')]"/>
+
+                <separator/>
+
+                <filter name="group_year"
+                        string="Group by Year"
+                        context="{'group_by':'year_stage'}"/>
+
+                <filter name="group_course"
+                        string="Group by Course"
+                        context="{'group_by':'course'}"/>
+
+                <filter name="group_grade"
+                        string="Group by Grade"
+                        context="{'group_by':'grade'}"/>
+
             </search>
         </field>
     </record>
@@ -173,7 +213,6 @@
                         MENU
     ====================================================== -->
     <menuitem id="menu_student_root" name="Student Management"/>
-
     <menuitem id="menu_student"
               name="Students"
               parent="menu_student_root"
